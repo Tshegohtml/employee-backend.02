@@ -3,7 +3,7 @@ const admin = require('firebase-admin');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-const serviceAccount = require('../employeeform/employee-form-c6eea-firebase-adminsdk-yibvb-89fa3ddead.json');
+const serviceAccount = require('./employee-form-c6eea-firebase-adminsdk-yibvb-89fa3ddead.json');
 
 
 admin.initializeApp({
