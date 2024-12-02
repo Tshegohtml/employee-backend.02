@@ -5,21 +5,20 @@ const cors = require('cors');
 
 const serviceAccount = require('../employeeform/employee-form-c6eea-firebase-adminsdk-yibvb-89fa3ddead.json');
 
-// Initialize Firebase Admin SDK
+
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  storageBucket: 'your-project-id.appspot.com', // Replace with your actual bucket name
+  storageBucket: 'your-project-id.appspot.com', 
 });
 
-// Firestore and Storage
-const db = admin.firestore();
-const bucket = admin.storage().bucket(); // Now uses the configured bucket name
 
+const db = admin.firestore();
+const bucket = admin.storage().bucket(); 
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-// Fetch all employees
+
 app.get('/employees', async (req, res) => {
   console.log('Fetching employees...');
   try {
@@ -36,21 +35,21 @@ app.get('/employees', async (req, res) => {
   }
 });
 
-// Add a new employee
+
 app.post('/employees', async (req, res) => {
   try {
     const newEmployee = req.body;
 
     console.log('Received new employee data:', newEmployee);
 
-    // Validate that the required fields are present
+
     if (!newEmployee.name || !newEmployee.email || !newEmployee.phone || !newEmployee.idNumber) {
       return res.status(400).json({ error: 'All fields are required: name, email, phone, idNumber' });
     }
 
-    // Change the field name from 'idNumber' to 'id'
-    const employeeData = { ...newEmployee, idNumber: newEmployee.idNumber };  // Replace 'idNumber' with 'id'
-    delete employeeData.idNumber;  // Remove the original 'idNumber' field
+   
+    const employeeData = { ...newEmployee, idNumber: newEmployee.idNumber };  
+    delete employeeData.idNumber;  
 
     const docRef = await db.collection('employees').add(employeeData);
     const savedDoc = await docRef.get();
